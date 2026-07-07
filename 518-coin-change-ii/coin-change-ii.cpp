@@ -1,18 +1,15 @@
 class Solution {
 public:
     int change(int amount, vector<int>& coins) {
-        long long n=coins.size();
-        vector<vector<unsigned long long>>dp(n+1,vector<unsigned long long>(amount+1,0));
-        for(long long i=0; i<n+1; i++){
-            for(long long j=0; j<amount+1; j++){
-                if(j==0)dp[i][j]=1;
-                else if(i==0)dp[i][j]=0;
-                else if(coins[i-1]<=j)
-                dp[i][j]=dp[i-1][j]+dp[i][j-coins[i-1]];
-                else
-                dp[i][j]=dp[i-1][j];
+        vector<unsigned long long> dp(amount + 1, 0);
+        dp[0] = 1; // Base case: 1 way to make amount 0
+        
+        for (int coin : coins) {
+            for (int j = coin; j <= amount; j++) {
+                dp[j] += dp[j - coin];
             }
         }
-        return dp[n][amount];
+        
+        return dp[amount];
     }
 };
