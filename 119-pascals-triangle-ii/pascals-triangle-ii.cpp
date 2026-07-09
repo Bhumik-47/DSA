@@ -1,19 +1,17 @@
 class Solution {
 public:
     vector<int> getRow(int rowIndex) {
-        vector<vector<int>>triangle;
-        for(int i=0; i<=rowIndex; i++){
-            vector<int>curr(i+1);
-            curr[0]=1;
-            curr[i]=1;
-            if(i>=2){
-                for(int j=1; j<i; j++){
-                    curr[j]=triangle[i-1][j-1]+triangle[i-1][j];
-                }
+        // Initialize a vector of size rowIndex + 1 with all 1s
+        vector<int> row(rowIndex + 1, 1);
+        
+        // Loop through each row up to rowIndex
+        for (int i = 2; i <= rowIndex; ++i) {
+            // Update from right to left to use the values from the previous state
+            for (int j = i - 1; j > 0; --j) {
+                row[j] = row[j] + row[j - 1];
             }
-            triangle.push_back(curr);
-            
         }
-        return triangle[rowIndex];
+        
+        return row;
     }
 };
