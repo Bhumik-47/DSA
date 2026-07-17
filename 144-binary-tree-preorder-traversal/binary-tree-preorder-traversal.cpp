@@ -16,7 +16,7 @@ public:
         vector<int>ans;
         if(root)st.push(root);
         while(!st.empty()){
-            TreeNode*root=st.top();
+            root=st.top();
             ans.push_back(root->val);
             st.pop();
             if(root->right)
