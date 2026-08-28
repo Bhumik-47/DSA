@@ -1,21 +1,30 @@
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
 class Solution {
 public:
     int findMinArrowShots(vector<vector<int>>& points) {
-        int n=points.size();
-        if(n==1)return 1;
-        sort(points.begin(),points.end());
-        int na=0,i=0,cr=0;
-        while(i<n-1){
-           cr=points[i][1];
-           while(i<n-1 && cr>=points[i+1][0]){
-            cr=min(cr,points[i+1][1]);
-            i++;
-           };
-           
-           na++;
-           i++;
+        if (points.empty()) return 0;
+
+        // Default sort compares points[i][0] first
+        sort(points.begin(), points.end());
+
+        int arrows = 1;
+        int end = points[0][1];
+
+        for (int i = 1; i < points.size(); ++i) {
+            if (points[i][0] <= end) {
+                // Overlap exists: narrow down the arrow position
+                end = min(end, points[i][1]);
+            } else {
+                // No overlap: shoot a new arrow
+                arrows++;
+                end = points[i][1];
+            }
         }
-        if(cr<points[n-1][0])na++;
-        return na;
+
+        return arrows;
     }
 };
