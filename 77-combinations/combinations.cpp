@@ -5,7 +5,7 @@ public:
         ans.push_back(v);
         return;
         }
-       if(i>n){
+        if ((int)v.size() + (n - i + 1) < k){
         return;
        }
        
